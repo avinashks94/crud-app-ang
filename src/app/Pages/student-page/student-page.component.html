@@ -1,0 +1,55 @@
+<div>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h4>Students Lists</h4>
+        <a routerLink="/student/create" class="btn btn-primary float-end"
+          >Add student</a
+        >
+      </div>
+      <div class="card-body">
+        <div *ngIf="isLoading; else elseTableBlock">
+          <app-loader></app-loader>
+        </div>
+        <ng-template #elseTableBlock>
+          <table class="table table-stripped table-bodered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Created At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of students; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.course }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.created_at }}</td>
+                <td>
+                  <a routerLink="/student/{{ item.id }}" class="btn btn-success"
+                    >Edit</a
+                  >
+                  &nbsp;
+                  <button
+                    class="btn btn-danger"
+                    type="button"
+                    (click)="deleteStudent($event, item.id)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

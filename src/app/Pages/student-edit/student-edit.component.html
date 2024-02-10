@@ -1,0 +1,74 @@
+<div>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h4>
+          Student Edit
+          <a routerLink="/students" class="btn btn-danger float-end">Back</a>
+        </h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isLoading; else elseForm">
+          <app-loader title="loadingTitle"></app-loader>
+        </div>
+        <ng-template #elseForm>
+          <form (ngSubmit)="updateStudent()">
+            <div *ngIf="student">
+              <div class="mb-3">
+                <label for="">Name</label>
+                <input
+                  type="text"
+                  [(ngModel)]="student.name"
+                  name="name"
+                  class="form-control"
+                />
+                <span *ngIf="errors.name" class="text-danger">{{
+                  errors.name
+                }}</span>
+              </div>
+              <div class="mb-3">
+                <label for="">Course</label>
+                <input
+                  type="text"
+                  [(ngModel)]="student.course"
+                  name="course"
+                  class="form-control"
+                />
+                <span *ngIf="errors.course" class="text-danger">{{
+                  errors.course
+                }}</span>
+              </div>
+              <div class="mb-3">
+                <label for="">Email</label>
+                <input
+                  type="text"
+                  [(ngModel)]="student.email"
+                  name="email"
+                  class="form-control"
+                />
+                <span *ngIf="errors.email" class="text-danger">{{
+                  errors.email
+                }}</span>
+              </div>
+              <div class="mb-3">
+                <label for="">Phone</label>
+                <input
+                  type="text"
+                  [(ngModel)]="student.phone"
+                  name="phone"
+                  class="form-control"
+                />
+                <span *ngIf="errors.phone" class="text-danger">{{
+                  errors.phone
+                }}</span>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Update</button>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
