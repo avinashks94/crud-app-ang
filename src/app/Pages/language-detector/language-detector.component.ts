@@ -131,9 +131,9 @@ export class LanguageDetectorComponent {
     try {
       this.loading.set(true);
       // 1) Languages (Linguist bytes)
-      const resp = (await firstValueFrom(
+      const resp = await firstValueFrom(
         this.http.get<LangMap>(langsEndpoint, { observe: 'response', headers })
-      )) as HttpResponse<LangMap>;
+      );
       if (!resp?.body) throw new Error('No language data returned');
       const data = resp.body;
       const total = Object.values(data).reduce((a, b) => a + b, 0);
@@ -209,7 +209,6 @@ export class LanguageDetectorComponent {
     let headers = new HttpHeaders({ Accept: 'application/vnd.github+json' });
     const meta = await firstValueFrom(this.http.get<any>(url, { headers }));
     return meta?.default_branch || 'HEAD'; // use default_branch per repo metadata [1]
-    return meta?.default_branch || 'HEAD'; // use default_branch per repo metadata [1]
   }
 
   private async listAllFiles(
@@ -226,7 +225,6 @@ export class LanguageDetectorComponent {
     const tree: TreeEntry[] = Array.isArray(resp?.tree) ? resp.tree : [];
     const blobs = tree.filter((e) => e.type === 'blob');
     const truncated = !!resp?.truncated; // Git Trees cap; warn if true [2]
-    return { blobs, truncated };
     return { blobs, truncated };
   }
 
