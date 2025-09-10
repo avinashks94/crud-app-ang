@@ -11,7 +11,7 @@ import {
 })
 export class StudentPageComponent {
   constructor(private studnetService: StudentService) {}
-  students!: StudentResponse[];
+  students: any;
   isLoading: boolean = false;
   ngOnInit() {
     this.getStudentLists();

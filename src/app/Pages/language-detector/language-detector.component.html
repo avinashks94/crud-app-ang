@@ -1,0 +1,110 @@
+<div class="page">
+  <header class="header">
+    <h1>GitHub Repo Language Breakdown</h1>
+    <p class="sub">
+      Analyze public or private repositories via GitHub’s languages API
+      (Linguist).
+    </p>
+  </header>
+
+  <section class="card">
+    <!-- Repo type -->
+    <!-- Repo type radios (inline) -->
+    <div class="row radio-row" role="radiogroup" aria-label="Repository Type">
+      <label class="radio inline">
+        <input
+          type="radio"
+          name="rtype"
+          [checked]="repoType() === 'public'"
+          (change)="setRepoType('public')"
+        />
+        <span>Public</span>
+      </label>
+      <label class="radio inline">
+        <input
+          type="radio"
+          name="rtype"
+          [checked]="repoType() === 'private'"
+          (change)="setRepoType('private')"
+        />
+        <span>Private</span>
+      </label>
+    </div>
+
+    <!-- URL -->
+    <div class="row">
+      <input
+        class="input"
+        [value]="repoUrl()"
+        (input)="repoUrl.set($any($event.target).value)"
+        placeholder="Enter GitHub repository URL"
+        spellcheck="false"
+        aria-label="Repository URL"
+      />
+    </div>
+
+    <!-- Token for private -->
+    <div class="row" *ngIf="repoType() === 'private'">
+      <input
+        class="input"
+        type="password"
+        [value]="token()"
+        (input)="token.set($any($event.target).value)"
+        placeholder="Personal Access Token (repo read)"
+        autocomplete="off"
+        aria-label="GitHub Personal Access Token"
+      />
+    </div>
+
+    <div class="actions">
+      <button
+        class="btn btn-primary mb-4"
+        (click)="analyze()"
+        [disabled]="loading()"
+      >
+        <span *ngIf="!loading()">Analyze</span>
+        <span *ngIf="loading()">Analyzing…</span>
+      </button>
+    </div>
+
+    <div class="alert info" *ngIf="infoMsg()">{{ infoMsg() }}</div>
+    <div class="alert warn" *ngIf="errorMsg()">{{ errorMsg() }}</div>
+
+    <!-- Results -->
+    <div class="results" *ngIf="result() as r">
+      <div class="meta" *ngIf="repoMeta()">
+        <div><strong>Owner:</strong> {{ repoMeta()!.owner }}</div>
+        <div><strong>Repo:</strong> {{ repoMeta()!.repo }}</div>
+        <div><strong>Total:</strong> {{ prettyBytes(r.totalBytes) }}</div>
+      </div>
+
+      <ul class="stats">
+        <li *ngFor="let lang of orderedLangs()">
+          <div class="stat-row">
+            <div class="label">
+              <span class="dot" [style.background]="color(lang)"></span>
+              {{ lang }}
+            </div>
+            <div class="value">
+              <span class="percent">{{ r.percents[lang] }}%</span>
+              <span class="bytes">{{ prettyBytes(r.bytes[lang]) }}</span>
+            </div>
+          </div>
+          <div class="bar">
+            <div
+              class="bar-fill"
+              [style.background]="color(lang)"
+              [style.width.%]="r.percents[lang]"
+            ></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <p class="muted tips">
+      Private: create a Personal Access Token (fine-grained) with read-only
+      access to the target repo and paste it above. Never share tokens; keep
+      them out of source control.
+    </p>
+  </section>
+</div>

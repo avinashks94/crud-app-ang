@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 export interface StudentResponse {
-  id: number;
-  name: string;
-  phone: string;
-  course: string;
-  email: string;
-  created_at: string;
-  updated_at: string;
+  // id: number;
+  // name: string;
+  // phone: string;
+  // course: string;
+  // email: string;
+  // created_at: string;
+  // updated_at: string;
 }
 
 @Injectable({

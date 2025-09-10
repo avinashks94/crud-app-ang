@@ -6,6 +6,8 @@ import { ContactPageComponent } from './Pages/contact-page/contact-page.componen
 import { StudentCreateComponent } from './Pages/student-create/student-create.component';
 import { StudentPageComponent } from './Pages/student-page/student-page.component';
 import { StudentEditComponent } from './Pages/student-edit/student-edit.component';
+import { LanguageDetectorComponent } from './Pages/language-detector/language-detector.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent, title: 'Home Page' },
@@ -26,10 +28,15 @@ const routes: Routes = [
     component: StudentEditComponent,
     title: 'Student Edit',
   },
+  {
+    path: 'language-detect',
+    component: LanguageDetectorComponent,
+    title: 'Language Detector',
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), CommonModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
