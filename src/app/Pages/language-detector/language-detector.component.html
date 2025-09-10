@@ -100,8 +100,27 @@
         </li>
       </ul>
     </div>
+    <!-- Useless files -->
+    <div class="card" *ngIf="auditFindings?.length">
+      <div class="card-header">
+        <h2>Useless files</h2>
+        <span class="muted">{{ auditFindings.length }} flagged</span>
+      </div>
+      <ul class="file-list">
+        <li *ngFor="let f of auditFindings">
+          <span
+            class="badge"
+            [class.err]="f.severity === 'error'"
+            [class.warn]="f.severity === 'warn'"
+            >{{ f.severity }}</span
+          >
+          <code class="path">{{ f.path }}</code>
+          <span class="why" style="margin-left: 10px">{{ f.reason }}</span>
+        </li>
+      </ul>
+    </div>
 
-    <p class="muted tips">
+    <p class="muted tips mt-4">
       Private: create a Personal Access Token (fine-grained) with read-only
       access to the target repo and paste it above. Never share tokens; keep
       them out of source control.
